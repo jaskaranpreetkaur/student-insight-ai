@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Insight AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">✦</div>
+                <div>
+                    <strong>Insight AI</strong>
+                    <small>STUDENT ANALYTICS</small>
+                </div>
+            </div>
+
+            <p class="nav-label">WORKSPACE</p>
+            <a class="nav-item active" href="#overview">▦ &nbsp; Dashboard</a>
+            <a class="nav-item" href="#predictor">◈ &nbsp; AI Predictor</a>
+            <a class="nav-item" href="#insights">↗ &nbsp; Lifestyle Insights</a>
+
+            <div class="sidebar-bottom">
+                <div class="avatar">MA</div>
+                <div>
+                    <strong>Muhammad Aamir</strong>
+                    <small>Student Project</small>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">STUDENT WELLNESS & PERFORMANCE</p>
+                    <h1>Student Analytics Dashboard</h1>
+                    <p class="muted">Understand habits. Explore patterns. Make informed decisions.</p>
+                </div>
+                <div class="status"><span></span> MODEL CONNECTED</div>
+            </header>
+
+            <section id="overview">
+                <div class="welcome-banner">
+                    <div>
+                        <p class="eyebrow">YOUR RESEARCH WORKSPACE</p>
+                        <h2>Discover the story behind student performance.</h2>
+                        <p>Explore sleep, screen time, study habits, attendance, and stress.</p>
+                    </div>
+                    <div class="banner-art">✧</div>
+                </div>
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Performance Explorer</h2>
+                        <p class="muted">Adjust the lifestyle indicators to estimate a score.</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <section class="panel predictor-panel" id="predictor">
+                        <div class="panel-heading">
+                            <div>
+                                <span class="panel-icon">✦</span>
+                                <h3>AI Performance Predictor</h3>
+                            </div>
+                            <span class="tag">RANDOM FOREST</span>
+                        </div>
+
+                        <form id="prediction-form">
+                            <div class="field">
+                                <div class="field-heading">
+                                    <label for="sleep">Sleep duration</label>
+                                    <span><b id="sleep-value">7</b> hours/day</span>
+                                </div>
+                                <input id="sleep" name="sleep_hours"
+                                    type="range" min="3" max="11" step="0.5" value="7">
+                            </div>
+
+                            <div class="field">
+                                <div class="field-heading">
+                                    <label for="screen">Screen time</label>
+                                    <span><b id="screen-value">5</b> hours/day</span>
+                                </div>
+                                <input id="screen" name="screen_time_hours"
+                                    type="range" min="0" max="13" step="0.5" value="5">
+                            </div>
+
+                            <div class="field">
+                                <div class="field-heading">
+                                    <label for="study">Study time</label>
+                                    <span><b id="study-value">3.5</b> hours/day</span>
+                                </div>
+                                <input id="study" name="study_hours"
+                                    type="range" min="0" max="9" step="0.5" value="3.5">
+                            </div>
+
+                            <div class="field">
+                                <div class="field-heading">
+                                    <label for="attendance">Attendance</label>
+                                    <span><b id="attendance-value">85</b>%</span>
+                                </div>
+                                <input id="attendance" name="attendance_pct"
+                                    type="range" min="40" max="100" step="1" value="85">
+                            </div>
+
+                            <div class="field">
+                                <div class="field-heading">
+                                    <label for="stress">Stress level</label>
+                                    <span><b id="stress-value">5</b> / 10</span>
+                                </div>
+                                <input id="stress" name="stress_level"
+                                    type="range" min="1" max="10" step="1" value="5">
+                            </div>
+
+                            <button class="primary-button" type="submit">
+                                ✦ &nbsp; Generate Prediction
+                            </button>
+                            <p id="form-status" class="form-status" role="status">
+                                Ready to analyze your inputs.
+                            </p>
+                        </form>
+                    </section>
+
+                    <section class="panel result-panel">
+                        <div class="panel-heading">
+                            <div>
+                                <span class="panel-icon">◉</span>
+                                <h3>Prediction Results</h3>
+                            </div>
+                        </div>
+
+                        <div class="score-circle" id="score-circle">
+                            <div>
+                                <span id="score">--</span>
+                                <small>OUT OF 100</small>
+                            </div>
+                        </div>
+
+                        <h3 id="category" class="result-category">Awaiting prediction</h3>
+                        <p class="muted result-description">
+                            Your model estimate will appear here.
+                        </p>
+
+                        <div class="divider"></div>
+                        <h4>Personalized suggestions</h4>
+                        <ul id="suggestions" class="suggestions">
+                            <li>Adjust your inputs and generate a prediction.</li>
+                        </ul>
+
+                        <div class="notice">
+                            This score is a model estimate, not an official grade.
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <section class="panel insights-panel" id="insights">
+                <div class="section-heading">
+                    <div>
+                        <h2>Lifestyle Insights</h2>
+                        <p class="muted">An illustrative visualization of the model inputs.</p>
+                    </div>
+                </div>
+                <div id="lifestyle-chart"></div>
+                <p class="muted chart-note">
+                    This chart displays your selected inputs, not population statistics.
+                </p>
+            </section>
+
+            <footer>
+                <span>STUDENT INSIGHT AI</span>
+                <span>Built with Python, Flask & Machine Learning</span>
+            </footer>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
